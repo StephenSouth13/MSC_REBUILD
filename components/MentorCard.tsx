@@ -78,7 +78,7 @@ const MentorCard = ({
           <div className="mb-4">
             <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Chuyên môn:</h4>
             <div className="flex flex-wrap gap-1 min-h-[2.5rem]">
-              {specialties.slice(0, 3).map((specialty, index) => (
+              {specialties?.slice(0, 3).map((specialty, index) => (
                 <Badge
                   key={index}
                   variant="secondary"
@@ -86,8 +86,12 @@ const MentorCard = ({
                 >
                   {specialty}
                 </Badge>
-              ))}
-              {specialties.length > 3 && (
+              )) || (
+                <Badge variant="outline" className="text-xs">
+                  Đang cập nhật
+                </Badge>
+              )}
+              {specialties && specialties.length > 3 && (
                 <Badge variant="outline" className="text-xs">
                   +{specialties.length - 3}
                 </Badge>
