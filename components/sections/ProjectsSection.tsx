@@ -1,7 +1,7 @@
 "use client"
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Sparkles, Star } from "lucide-react"
 import { useLanguage } from "../language-provider"
 import { Button } from "@/components/ui/button"
 import ProjectCard from "../ProjectCard"
@@ -48,88 +48,132 @@ const ProjectsSection = () => {
   },
   {
     id: "4",
-    title: "🛠️ Dự án: Tâm Châu",
-    description: "🎯 Phát triển năng lực đội ngũ quản lý dự án thông qua huấn luyện thực tiễn và định hướng tư duy lãnh đạo chiến lược.",
-    instructors: "🧑‍🏫 Ban Giảng Huấn: Phan Huỳnh Anh & MSCer Team",
-    image: "/Projects/Tam-Chau.webp",
-    category: "Quản lý dự án",
-    mentors: [
-      { name: "TS. Phan Huỳnh Anh", avatar: "/Mentors/PHA.webp" },
-      { name: "MSC Teams", avatar: "/MSCers/mscteam.webp" },
-    ],
-  },
-  {
-    id: "5",
-    title: "🛠️ Dự án: Đôi Dép - Không thể thiếu nhau",
-    description: "🎯 Chương trình coaching cá nhân hoá giúp từng thành viên tìm lại mục tiêu, giá trị cốt lõi và phát triển năng lực quản trị cảm xúc.",
-    instructors: "🧑‍🏫 Ban Giảng Huấn: Phan Huỳnh Anh & Trần Lê Bảo Châu",
-    image: "/Projects/DoiDep.webp",
-    category: "Coaching",
-    mentors: [
-      { name: "TS. Phan Huỳnh Anh", avatar: "/Mentors/PHA.webp" },
-      { name: "Trần Lê Bảo Châu", avatar: "/Mentors/TLBC.webp" },
-    ],
-  },
-  {
-    id: "6",
-    title: "🛠️ Dự án: VNPT",
-    description: "🎯 Xây dựng và lan toả văn hoá doanh nghiệp tích cực, thúc đẩy hiệu suất làm việc và tinh thần đồng đội qua chuỗi hội thảo & mentoring.",
+    title: "🛠️ Dự án: VRA Việt Nam",
+    description: "🎯 Đào tạo kỹ năng Presentation, xây dựng brand cá nhân cho đội ngũ lãnh đạo, nâng cao hiệu quả giao tiếp trong môi trường doanh nghiệp.",
     instructors: "🧑‍🏫 Ban Giảng Huấn: Phan Huỳnh Anh & Nguyễn Chí Thành",
-    image: "/Projects/VNPT.webp",
-    category: "Workshop",
+    image: "/Projects/VRA.webp",
+    category: "Mentoring, Training",
     mentors: [
       { name: "TS. Phan Huỳnh Anh", avatar: "/Mentors/PHA.webp" },
       { name: "Nguyễn Chí Thành", avatar: "/Mentors/NCT.webp" },
     ],
   },
-]
-
+  ]
 
   return (
-    <section className="py-20 bg-gray-50 dark:bg-gray-900">
-      <div className="container">
+    <section className="py-20 bg-white dark:bg-dark-900 dark-section relative overflow-hidden">
+      {/* Dark mode background effects */}
+      <div className="dark:block hidden absolute inset-0">
+        <div className="particles-bg" />
+        
+        {/* Floating geometric shapes */}
         <motion.div
+          className="absolute top-20 left-10 w-20 h-20 bg-neon-blue/10 rounded-full blur-xl"
+          animate={{ 
+            y: [0, -30, 0],
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.6, 0.3]
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        />
+        
+        <motion.div
+          className="absolute bottom-20 right-20 w-16 h-16 bg-neon-purple/10 rotate-45"
+          animate={{ 
+            rotate: [45, 135, 45],
+            scale: [1, 1.3, 1],
+            opacity: [0.2, 0.5, 0.2]
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        />
+      </div>
+
+      <div className="container relative z-10">
+        <motion.div
+          className="text-center mb-16"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white font-serif">
-            Dự án đã triển khai
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Khám phá các dự án đào tạo và phát triển kỹ năng chuyên nghiệp mà MSC Center đã và đang triển khai.
+          <div className="flex items-center justify-center mb-4">
+            <motion.div
+              animate={{ rotate: [0, 360] }}
+              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+            >
+              <Star className="h-6 w-6 text-blue-600 dark:text-neon-blue mr-3" />
+            </motion.div>
+            
+            <h2 className="text-4xl font-bold text-gray-900 dark:text-slate-100 font-serif">
+              Dự án nổi bật
+            </h2>
+            
+            <motion.div
+              animate={{ rotate: [360, 0] }}
+              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+            >
+              <Sparkles className="h-6 w-6 text-orange-500 dark:text-neon-orange ml-3" />
+            </motion.div>
+          </div>
+          
+          <p className="text-lg text-gray-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
+            Khám phá những dự án thành công mà MSC Center đã thực hiện, 
+            mang lại giá trị thực tế cho doanh nghiệp và cá nhân.
           </p>
+
+          {/* Dark mode decorative line */}
+          <motion.div 
+            className="mt-6 mx-auto w-24 h-1 bg-gradient-to-r from-blue-600 to-orange-500 dark:from-neon-blue dark:to-neon-orange rounded-full"
+            initial={{ width: 0 }}
+            whileInView={{ width: 96 }}
+            transition={{ duration: 1, delay: 0.5 }}
+            viewport={{ once: true }}
+          />
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
+              className="group"
             >
+              <div className="dark:block hidden absolute inset-0 bg-gradient-to-br from-neon-blue/5 via-neon-purple/5 to-neon-orange/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl" />
               <ProjectCard {...project} />
             </motion.div>
           ))}
         </div>
 
         <motion.div
+          className="text-center"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
-          className="text-center"
         >
-          <Link href="/du-an">
-            <Button size="lg" className="btn-primary">
-              Xem tất cả dự án
-              <ArrowRight className="ml-2 h-5 w-5" />
+          <div className="relative inline-block">
+            {/* Dark mode glow effect */}
+            <div className="dark:block hidden absolute inset-0 bg-gradient-to-r from-neon-blue/20 via-neon-purple/20 to-neon-orange/20 rounded-lg blur-xl opacity-75 animate-pulse" />
+            
+            <Button
+              asChild
+              size="lg"
+              className="relative bg-blue-600 hover:bg-blue-700 dark:bg-gradient-to-r dark:from-neon-blue dark:to-neon-purple dark:text-dark-900 dark:hover:from-blue-500 dark:hover:to-purple-500 text-white px-8 py-4 rounded-lg font-medium transition-all duration-300 hover:shadow-xl dark:shadow-glow glow-border"
+            >
+              <Link href="/du-an" className="flex items-center space-x-2">
+                <span>Xem tất cả dự án</span>
+                <motion.div
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <ArrowRight className="h-5 w-5" />
+                </motion.div>
+              </Link>
             </Button>
-          </Link>
+          </div>
         </motion.div>
       </div>
     </section>
