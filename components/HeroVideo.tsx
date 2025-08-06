@@ -1,7 +1,7 @@
 "use client"
 import Link from 'next/link';
 import { motion } from "framer-motion"
-import { ChevronDown, Play, Pause } from "lucide-react"
+import { ChevronDown, Play, Pause, Sparkles, Stars } from "lucide-react"
 import { useState, useRef } from "react"
 import { useLanguage } from "./language-provider"
 import { Button } from "@/components/ui/button"
@@ -43,9 +43,9 @@ const HeroVideo = () => {
           poster="/placeholder.svg?height=1080&width=1920&text=MSC+Center+Video+Poster"
         >
           <source src="/Intro.mp4" type="video/mp4" />
-          {/* Fallback gradient background */}
+          {/* Enhanced fallback gradient background for both light and dark modes */}
           <div
-            className="absolute inset-0 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900"
+            className="absolute inset-0 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 dark:from-dark-950 dark:via-dark-900 dark:to-blue-950"
             style={{
               backgroundImage: `
                 radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
@@ -56,28 +56,100 @@ const HeroVideo = () => {
           />
         </video>
 
-        {/* Video Overlay */}
-        <div className="absolute inset-0 bg-black/40" />
+        {/* Enhanced Video Overlay with dark mode support */}
+        <div className="absolute inset-0 bg-black/40 dark:bg-black/60" />
 
-        {/* Animated waves overlay */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-y-12 animate-pulse" />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-300/20 to-transparent transform skew-y-12 animate-pulse delay-1000" />
+        {/* Dark mode specific overlay effects */}
+        <div className="dark:block hidden absolute inset-0">
+          {/* Aurora-like gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-neon-blue/20 via-neon-purple/20 to-neon-orange/20 animate-aurora opacity-50" />
+          
+          {/* Particle constellation effect */}
+          <div className="particles-bg" />
+          
+          {/* Floating geometric shapes */}
+          <motion.div
+            className="absolute top-1/4 left-1/6 w-4 h-4 bg-neon-blue/30 rounded-full"
+            animate={{
+              y: [0, -30, 0],
+              x: [0, 20, 0],
+              scale: [1, 1.5, 1],
+              opacity: [0.3, 0.8, 0.3]
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          />
+          
+          <motion.div
+            className="absolute top-1/3 right-1/4 w-6 h-6 bg-neon-purple/30 rotate-45"
+            animate={{
+              y: [0, 25, 0],
+              x: [0, -15, 0],
+              rotate: [45, 135, 45],
+              opacity: [0.4, 0.9, 0.4]
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          />
+          
+          <motion.div
+            className="absolute bottom-1/3 left-1/3 w-3 h-3 bg-neon-orange/40 rounded-full"
+            animate={{
+              y: [0, -20, 0],
+              scale: [1, 2, 1],
+              opacity: [0.4, 1, 0.4]
+            }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 4 }}
+          />
+        </div>
+
+        {/* Enhanced animated waves overlay */}
+        <div className="absolute inset-0 opacity-20 dark:opacity-30">
+          <motion.div 
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 dark:via-neon-blue/20 to-transparent transform -skew-y-12" 
+            animate={{ 
+              x: ["-100%", "100%"],
+              opacity: [0.5, 1, 0.5]
+            }}
+            transition={{ 
+              duration: 8, 
+              repeat: Infinity, 
+              ease: "easeInOut" 
+            }}
+          />
+          
+          <motion.div 
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-300/20 dark:via-neon-purple/20 to-transparent transform skew-y-12" 
+            animate={{ 
+              x: ["100%", "-100%"],
+              opacity: [0.3, 0.8, 0.3]
+            }}
+            transition={{ 
+              duration: 12, 
+              repeat: Infinity, 
+              ease: "easeInOut",
+              delay: 2
+            }}
+          />
         </div>
       </div>
 
-      {/* Video Controls */}
+      {/* Enhanced Video Controls with dark mode styling */}
       <motion.button
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2 }}
         onClick={toggleVideo}
-        className="absolute top-6 right-6 z-30 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300"
+        className="absolute top-6 right-6 z-30 w-12 h-12 bg-white/20 dark:bg-dark-800/50 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 dark:hover:bg-dark-700/70 transition-all duration-300 border border-white/30 dark:border-neon-blue/30 hover:shadow-glow-sm group"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
       >
-        {isPlaying ? <Pause className="h-5 w-5 text-white" /> : <Play className="h-5 w-5 text-white ml-1" />}
+        {isPlaying ? (
+          <Pause className="h-5 w-5 text-white dark:text-neon-blue group-hover:text-blue-200 transition-colors duration-300" />
+        ) : (
+          <Play className="h-5 w-5 text-white dark:text-neon-blue group-hover:text-blue-200 ml-1 transition-colors duration-300" />
+        )}
       </motion.button>
 
-      {/* Content */}
+      {/* Enhanced Content with dark mode typography */}
       <div className="relative z-20 text-center text-white px-4">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -85,60 +157,62 @@ const HeroVideo = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="max-w-4xl mx-auto"
         >
-          {/* Logo 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="mb-8"
-          >
-            <div className="mx-auto w-96 h-32 flex items-center justify-center bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
-              <div className="text-center">
-                <h1 className="text-4xl font-bold text-white mb-2">MSC CENTER</h1>
-                <p className="text-lg text-gray-200">Life Long Learning</p>
-              </div>
-            </div>
-          </motion.div> */}
+          {/* Enhanced dark mode floating elements */}
+          <div className="dark:block hidden absolute inset-0 pointer-events-none">
+            <motion.div
+              className="absolute -top-10 left-1/4"
+              animate={{ 
+                y: [0, -15, 0],
+                rotate: [0, 180, 360],
+                opacity: [0.5, 1, 0.5]
+              }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <Sparkles className="h-8 w-8 text-neon-blue/70" />
+            </motion.div>
+            
+            <motion.div
+              className="absolute -top-5 right-1/3"
+              animate={{ 
+                y: [0, 10, 0],
+                x: [0, 15, 0],
+                scale: [1, 1.3, 1]
+              }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            >
+              <Stars className="h-6 w-6 text-neon-purple/70" />
+            </motion.div>
+          </div>
 
-          {/* Title 
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 font-serif"
-          >
-            {t("hero.title")}
-          </motion.h2>*/}
-
-          {/* Subtitle 
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="text-xl md:text-2xl mb-8 text-gray-200 max-w-3xl mx-auto leading-relaxed"
-          >
-            {t("hero.subtitle")}
-          </motion.p>*/}
-
-          {/* CTA Button */}
+          {/* Enhanced CTA Button with dark mode glow effects */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1 }}
+            className="relative"
           >
+            {/* Dark mode background glow */}
+            <div className="dark:block hidden absolute inset-0 bg-gradient-to-r from-neon-blue/20 via-neon-purple/20 to-neon-orange/20 rounded-lg blur-xl opacity-75 animate-pulse" />
+            
             <Button
               asChild
               size="lg"
-              className="btn-secondary text-lg px-8 py-4 hover:scale-105 transition-transform duration-300"
+              className="relative btn-secondary text-lg px-8 py-4 hover:scale-105 transition-all duration-300 dark:bg-gradient-to-r dark:from-neon-blue dark:to-neon-purple dark:text-dark-900 dark:hover:from-blue-500 dark:hover:to-purple-500 dark:shadow-glow glow-border font-bold"
             >
-              <Link href="/lien-he">
-                {t("hero.cta")}
+              <Link href="/lien-he" className="flex items-center space-x-2">
+                <span>{t("hero.cta")}</span>
+                <motion.div
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <Sparkles className="h-5 w-5 dark:text-dark-900" />
+                </motion.div>
               </Link>
             </Button>
           </motion.div>
         </motion.div>
 
-        {/* Scroll Indicator */}
+        {/* Enhanced Scroll Indicator with dark mode styling */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -148,12 +222,41 @@ const HeroVideo = () => {
           <motion.div
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-            className="flex flex-col items-center text-white/80"
+            className="flex flex-col items-center text-white/80 dark:text-slate-300 group cursor-pointer"
+            onClick={scrollToContact}
           >
-            <span className="text-sm mb-2">Cuộn xuống</span>
-            <ChevronDown className="h-6 w-6" />
+            <span className="text-sm mb-2 dark:text-neon-blue group-hover:text-blue-300 transition-colors duration-300">
+              Cuộn xuống
+            </span>
+            
+            <div className="relative">
+              {/* Dark mode glow effect for arrow */}
+              <div className="dark:block hidden absolute inset-0 bg-neon-blue/50 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              
+              <ChevronDown className="h-6 w-6 relative z-10 dark:text-neon-blue group-hover:text-blue-300 transition-colors duration-300" />
+            </div>
+
+            {/* Animated line indicator for dark mode */}
+            <motion.div
+              className="dark:block hidden w-px h-12 bg-gradient-to-b from-neon-blue/70 to-transparent mt-2"
+              animate={{ 
+                height: [24, 48, 24],
+                opacity: [0.7, 1, 0.7]
+              }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            />
           </motion.div>
         </motion.div>
+      </div>
+
+      {/* Dark mode ambient lighting effect */}
+      <div className="dark:block hidden absolute inset-0 pointer-events-none z-10">
+        <div className="absolute top-0 left-0 w-full h-full">
+          {/* Radial gradient spotlights */}
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-neon-blue/10 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-neon-purple/10 rounded-full blur-3xl animate-pulse delay-1000" />
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-neon-orange/10 rounded-full blur-3xl animate-pulse delay-2000" />
+        </div>
       </div>
     </section>
   )
