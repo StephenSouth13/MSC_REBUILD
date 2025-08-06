@@ -15,7 +15,7 @@ interface MentorCardProps {
   title: string
   degree: string
   avatar: string
-  specialties: string[]
+  specialties?: string[]
   linkPrefix?: 'mentors' | 'mscers'; // Prop để quyết định loại link
   social?: {
     linkedin?: string
