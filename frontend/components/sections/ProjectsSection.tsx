@@ -11,10 +11,10 @@ const ProjectsSection = () => {
 
   const projects = [
   {
+    id: "1",
     slug:"Fdeli",
     title: "🛠️ Dự án: Công ty TNHH F Deli",
     description: "👉Mentoring & Coaching: Chuẩn hoá quy trình làm việc.",
-    
     instructors: "🧑‍🏫 Ban Giảng Huấn: Phan Huỳnh Anh & MSC Teams",
     image: "/Projects/Fdeli.webp",
     category: "Mentoring",
@@ -74,7 +74,7 @@ const ProjectsSection = () => {
   {
     id: "6",
     title: "🛠️ Dự án: VNPT",
-    description: "🎯 Xây dựng và lan toả văn hoá doanh nghiệp tích cực, thúc đẩy hiệu suất làm việc và tinh thần đồng đội qua chuỗi hội thảo & mentoring.",
+    description: "🎯 Xây dựng và lan toả văn hoá doanh nghiệp tích cực, thúc đẩy hiệu suất làm việc v�� tinh thần đồng đội qua chuỗi hội thảo & mentoring.",
     instructors: "🧑‍🏫 Ban Giảng Huấn: Phan Huỳnh Anh & Nguyễn Chí Thành",
     image: "/Projects/VNPT.webp",
     category: "Workshop",

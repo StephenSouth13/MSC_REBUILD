@@ -9,21 +9,31 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import { useAuth } from "@/components/auth/AuthProvider"
+import { useRouter } from "next/navigation"
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const { signIn } = useAuth()
+  const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setError(null)
     setIsLoading(true)
-    // Simulate login process
-    setTimeout(() => {
+    try {
+      await signIn(email, password)
+      router.replace("/student/dashboard")
+    } catch (err: any) {
+      setError(err?.message || "Đăng nhập thất bại")
+    } finally {
       setIsLoading(false)
-      console.log("Login attempt:", { email, password })
-    }, 2000)
+    }
   }
 
   const benefits = [
@@ -161,15 +171,15 @@ export default function LoginPage() {
                   </div>
                 </div>
 
-                {/* Remember & Forgot */}
+                {/* Demo helper */}
                 <div className="flex items-center justify-between">
-                  <label className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                    />
-                    <span className="text-sm text-gray-600 dark:text-gray-300">Ghi nhớ đăng nhập</span>
-                  </label>
+                  <button
+                    type="button"
+                    onClick={() => { setEmail("quachthanhlong2k3@gamil.com"); setPassword("123456") }}
+                    className="text-xs text-blue-600 hover:underline"
+                  >
+                    Dùng tài khoản demo (auto điền)
+                  </button>
                   <Link
                     href="/forgot-password"
                     className="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
@@ -177,6 +187,8 @@ export default function LoginPage() {
                     Quên mật khẩu?
                   </Link>
                 </div>
+
+                {error && <div className="text-sm text-red-600">{error}</div>}
 
                 {/* Submit Button */}
                 <Button

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Clock, Users, Award, BookOpen, Target, CheckCircle, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import AddToCartButton from "@/components/cart/AddToCartButton";
 import { motion, AnimatePresence, useAnimation, useInView, Variants } from 'framer-motion'; // Đảm bảo đã import useAnimation
 
 export default function TrainingPage() {
@@ -47,7 +48,7 @@ export default function TrainingPage() {
 
   const benefits = [
     { icon: Award, title: "Chứng chỉ uy tín", description: "Nhận chứng chỉ được công nhận quốc tế và trong nước", },
-    { icon: Users, title: "Học từ chuyên gia", description: "Đội ngũ giảng viên giàu kinh nghiệm thực tiễn", },
+    { icon: Users, title: "Học từ chuyên gia", description: "Đội ngũ giảng viên giàu kinh nghi���m thực tiễn", },
     { icon: Target, title: "Thực hành thực tế", description: "70% thời gian dành cho thực hành và case study", },
     { icon: BookOpen, title: "Tài liệu độc quyền", description: "Bộ tài liệu học tập được biên soạn riêng", },
   ];
@@ -274,7 +275,7 @@ export default function TrainingPage() {
                   </div>
                   <div className="flex space-x-3">
                     <Link href={`/dao-tao/${program.id}`} className="flex-1"><Button className="w-full btn-primary">Chi tiết khóa học</Button></Link>
-                    <Link href="/lien-he"><Button variant="outline" className="bg-transparent">Đăng ký ngay</Button></Link>
+                    <AddToCartButton courseId={program.id} />
                   </div>
                 </CardContent>
               </Card>

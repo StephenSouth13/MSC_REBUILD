@@ -18,6 +18,7 @@ export default function ProjectsPage() {
   // Thay thế dữ liệu mockup bằng dữ liệu dự án thực tế
   const projects = [
     {
+      id: "1",
       slug:"Fdeli",
       title: "Công ty TNHH F-Deli",
       description: "Mentoring & Coaching: Chuẩn hoá quy trình làm việc toàn diện, tối ưu hóa hiệu suất và xây dựng văn hóa doanh nghiệp bền vững.",
@@ -130,7 +131,7 @@ export default function ProjectsPage() {
 
   // Các chỉ số thống kê (có thể cập nhật cho phù hợp)
   const stats = [
-    { label: "Dự án tiêu biểu", value: `${projects.length}+`, icon: CheckCircle },
+    { label: "Dự án ti��u biểu", value: `${projects.length}+`, icon: CheckCircle },
     { label: "Doanh nghiệp đối tác", value: "50+", icon: Target },
     { label: "Học viên được đào tạo", value: "5,000+", icon: Users },
     { label: "Lĩnh vực đào tạo", value: "10+", icon: TrendingUp },

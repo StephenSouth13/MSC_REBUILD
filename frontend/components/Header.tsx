@@ -5,11 +5,14 @@ import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, ChevronDown, ChevronRight, Sun, Moon, User, LogIn, UserPlus } from 'lucide-react'
+import { Menu, X, ChevronDown, ChevronRight, Sun, Moon, User, LogIn, UserPlus, LogOut, BookOpen, ShoppingCart, Receipt, Settings } from 'lucide-react'
 import { useTheme } from "next-themes"
 import { useLanguage } from "./language-provider"
 import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useAuth } from "@/components/auth/AuthProvider"
+import { useRouter } from "next/navigation"
 
 // FIX: Bổ sung các variant animation cần thiết cho mobile menu "xịn"
 const mobileNavVariants = {
@@ -27,6 +30,8 @@ const Header = () => {
   const { theme, setTheme } = useTheme()
   const { language, setLanguage, t } = useLanguage()
   const pathname = usePathname()
+  const { user, signOut } = useAuth()
+  const router = useRouter()
 
   // FIX: Bổ sung hook để khóa cuộn trang khi mobile menu mở
   useEffect(() => {
@@ -81,10 +86,45 @@ const Header = () => {
             <div className="container mx-auto flex justify-between items-center h-full px-4 sm:px-6 lg:px-8 relative z-10">
               <div className="flex items-center space-x-4 text-xs flex-wrap"><span className="hidden sm:block">📧 msc.edu.vn@gmail.com</span><span className="hidden md:block">📞 (+84) 329 381 489</span><span className="block">🌟 Mekong Skill Center</span></div>
               <div className="flex items-center space-x-2">
-                <DropdownMenu><DropdownMenuTrigger asChild><Button variant="ghost" size="sm" className="flex items-center space-x-1 text-white hover:bg-white/20 h-7"><span className="text-sm">{language === "vi" ? "🇻🇳" : "🇬🇧"}</span><ChevronDown className="h-3 w-3" /></Button></DropdownMenuTrigger><DropdownMenuContent><DropdownMenuItem onClick={() => setLanguage("vi")}>🇻🇳 Tiếng Việt</DropdownMenuItem><DropdownMenuItem onClick={() => setLanguage("en")}>🇬🇧 English</DropdownMenuItem></DropdownMenuContent></DropdownMenu>
-                <Link href="/login" className="hidden sm:block"><Button variant="ghost" size="sm" className="text-white hover:bg-white/20 h-7 text-xs"><LogIn className="h-3 w-3 mr-1" />{t("nav.login")}</Button></Link>
-                <Link href="/register" className="hidden sm:block"><Button size="sm" className="bg-white text-blue-600 hover:bg-blue-50 h-7 text-xs"><UserPlus className="h-3 w-3 mr-1" />{t("nav.register")}</Button></Link>
-                <Link href="/profile" className="hidden sm:block"><Button variant="ghost" size="sm" className="text-white hover:bg-white/20 h-7 text-xs border border-white/30"><User className="h-3 w-3 mr-1" />{t("nav.profile")}</Button></Link>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm" className="flex items-center space-x-1 text-white hover:bg-white/20 h-7"><span className="text-sm">{language === "vi" ? "🇻🇳" : "🇬🇧"}</span><ChevronDown className="h-3 w-3" /></Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem onClick={() => setLanguage("vi")}>🇻🇳 Tiếng Việt</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setLanguage("en")}>🇬🇧 English</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                {!user ? (
+                  <>
+                    <Link href="/login" className="hidden sm:block"><Button variant="ghost" size="sm" className="text-white hover:bg-white/20 h-7 text-xs"><LogIn className="h-3 w-3 mr-1" />{t("nav.login")}</Button></Link>
+                    <Link href="/register" className="hidden sm:block"><Button size="sm" className="bg-white text-blue-600 hover:bg-blue-50 h-7 text-xs"><UserPlus className="h-3 w-3 mr-1" />{t("nav.register")}</Button></Link>
+                  </>
+                ) : (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="sm" className="text-white hover:bg-white/20 h-7 text-xs flex items-center">
+                        <Avatar className="h-5 w-5">
+                          <AvatarImage src={user.avatar || "/placeholder.svg"} alt={user.name} />
+                          <AvatarFallback>{user.name.slice(0,2).toUpperCase()}</AvatarFallback>
+                        </Avatar>
+                        <span className="ml-2 max-w-[120px] truncate hidden md:inline">{user.name}</span>
+                        <ChevronDown className="h-3 w-3 ml-1" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-56">
+                      <DropdownMenuItem asChild><Link href="/student/dashboard"><User className="w-4 h-4 mr-2" />Tổng quan</Link></DropdownMenuItem>
+                      <DropdownMenuItem asChild><Link href="/student/my-courses"><BookOpen className="w-4 h-4 mr-2" />Khóa học của tôi</Link></DropdownMenuItem>
+                      <DropdownMenuItem asChild><Link href="/cart"><ShoppingCart className="w-4 h-4 mr-2" />Giỏ hàng</Link></DropdownMenuItem>
+                      <DropdownMenuItem asChild><Link href="/student/orders"><Receipt className="w-4 h-4 mr-2" />Đơn hàng</Link></DropdownMenuItem>
+                      <DropdownMenuItem asChild><Link href="/student/settings"><Settings className="w-4 h-4 mr-2" />Cài đặt</Link></DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={() => { signOut(); router.push("/") }}>
+                        <LogOut className="w-4 h-4 mr-2" /> Đăng xuất
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                )}
               </div>
             </div>
           </motion.div>
@@ -145,11 +185,21 @@ const Header = () => {
                   ))}
                 </motion.nav>
                 <div className="p-4 sm:p-6 mt-auto border-t border-slate-200/70 dark:border-gray-700/70">
-                    <div className="grid grid-cols-2 gap-3">
+                    {!user ? (
+                      <div className="grid grid-cols-2 gap-3">
                         <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}><Button variant="outline" className="w-full"><LogIn className="w-4 h-4 mr-2" />{t("nav.login")}</Button></Link>
                         <Link href="/register" onClick={() => setIsMobileMenuOpen(false)}><Button className="w-full bg-blue-600 hover:bg-blue-700 text-white"><UserPlus className="w-4 h-4 mr-2" />{t("nav.register")}</Button></Link>
-                        <Link href="/profile" className="col-span-2" onClick={() => setIsMobileMenuOpen(false)}><Button variant="outline" className="w-full mt-2"><User className="w-4 h-4 mr-2" />{t("nav.profile")}</Button></Link>
-                    </div>
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-2 gap-3">
+                        <Link href="/student/dashboard" onClick={() => setIsMobileMenuOpen(false)}><Button variant="outline" className="w-full"><User className="w-4 h-4 mr-2" />Tổng quan</Button></Link>
+                        <Link href="/student/my-courses" onClick={() => setIsMobileMenuOpen(false)}><Button variant="outline" className="w-full"><BookOpen className="w-4 h-4 mr-2" />Khóa học</Button></Link>
+                        <Link href="/cart" onClick={() => setIsMobileMenuOpen(false)}><Button variant="outline" className="w-full"><ShoppingCart className="w-4 h-4 mr-2" />Giỏ hàng</Button></Link>
+                        <Link href="/student/orders" onClick={() => setIsMobileMenuOpen(false)}><Button variant="outline" className="w-full"><Receipt className="w-4 h-4 mr-2" />Đơn hàng</Button></Link>
+                        <Link href="/student/settings" onClick={() => setIsMobileMenuOpen(false)} className="col-span-2"><Button variant="outline" className="w-full mt-2"><Settings className="w-4 h-4 mr-2" />Cài đặt</Button></Link>
+                        <Button variant="outline" className="col-span-2 w-full" onClick={() => { signOut(); setIsMobileMenuOpen(false); router.push("/") }}><LogOut className="w-4 h-4 mr-2" />Đăng xuất</Button>
+                      </div>
+                    )}
                     <p className="text-center text-xs text-slate-500 dark:text-gray-500 mt-4">© {new Date().getFullYear()} Mekong Skill Center.</p>
                 </div>
               </div>
